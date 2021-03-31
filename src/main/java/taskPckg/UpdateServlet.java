@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -51,6 +52,7 @@ public class UpdateServlet extends HttpServlet {
 	         // Open a connection    
 	    	  
 	         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	         java.sql.Statement stmt = conn.createStatement(); 
 
 	         String name = request.getParameter("name");
 	         String description = request.getParameter("desc");
@@ -59,36 +61,48 @@ public class UpdateServlet extends HttpServlet {
 	         String ed = request.getParameter("eDate");
 	         String id = request.getParameter("id");
 	         
-
-	         PreparedStatement update;
-	         if(!name.isEmpty())
+	         String uid = request.getParameter("uid");
+	         
+	         String sql = "SELECT * FROM task WHERE id='"+id+ "'";
+	         ResultSet rs = stmt.executeQuery(sql);
+	         
+	         if(rs.getString("user_id").equals(uid))
 	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET name='"+name+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
+	        	 PreparedStatement update;
+		         if(!name.isEmpty())
+		         {
+		        	 update = conn.prepareStatement("UPDATE userdetails SET name='"+name+ "' WHERE id = '"+id+"'");
+		        	 update.executeUpdate();
+		         }
+		         if(!description.isEmpty())
+		         {
+		        	 update = conn.prepareStatement("UPDATE userdetails SET username='"+description+ "' WHERE id = '"+id+"'");
+		        	 update.executeUpdate();
+		         }
+		         if(!severity.isEmpty())
+		         {
+		        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+severity+ "' WHERE id = '"+id+"'");
+		        	 update.executeUpdate();
+		         }
+		         if(!sd.isEmpty())
+		         {
+		        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+sd+ "' WHERE id = '"+id+"'");
+		        	 update.executeUpdate();
+		         }  
+		         if(!ed.isEmpty())
+		         {
+		        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+ed+ "' WHERE id = '"+id+"'");
+		        	 update.executeUpdate();
+		         }
+		         
+			     
+			     response.sendRedirect("landing.jsp");
 	         }
-	         if(!description.isEmpty())
+	         else
 	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET username='"+description+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
-	         if(!severity.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+severity+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
-	         if(!sd.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+sd+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }  
-	         if(!ed.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+ed+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
+	        	 response.sendRedirect("error.jsp");
 	         }
 	         
-		     
-		     response.sendRedirect("landing.jsp");
   
 	      } 
 	      catch(SQLException se) 

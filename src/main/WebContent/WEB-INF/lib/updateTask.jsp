@@ -16,6 +16,7 @@
     ChangeSeverity: <input type="text" name="severity" id="severity"> <br><br>
     Change Start Date: <input type="date" name="sDate" id="sDate"> <br><br>
     Change End Date: <input type="date" name="eDate" id="eDate"> <br><br>
+    <input type="hidden" name="uid" id="uid" value= <%= request.getAttribute("uid") %>>
     <input type="submit" value="Submit"/>
 </form>
 </body>

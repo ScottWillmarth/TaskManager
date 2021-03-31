@@ -11,6 +11,7 @@
 <body>
     <form action="deleteServlet" method="post">
     Enter the ID of the Task: <input type="text" name="id" id="id" required>
+    <input type="hidden" name="uid" id="uid" value= <%= request.getAttribute("uid") %>>
     <input type="submit" value="Submit"/>
 </form>
 </body>

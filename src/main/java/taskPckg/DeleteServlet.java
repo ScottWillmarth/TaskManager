@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -50,17 +51,29 @@ public class DeleteServlet extends HttpServlet {
 	         Class.forName(JDBC_DRIVER);
 	         
 	         // Open a connection    
-	    	  
+	         
 	         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	         Statement st = conn.createStatement();
+	         java.sql.Statement stmt = conn.createStatement(); 
 
 	         String id = request.getParameter("id");
+	         String uid = request.getParameter("uid");
 	         
-	         int i = st.executeUpdate("delete from task WHERE id = '"+id+"'");
+	         String sql = "SELECT * FROM task WHERE id='"+id+ "'";
+	         ResultSet rs = stmt.executeQuery(sql);
+	         
+	         if(rs.getString("user_id").equals(uid))
+	         {
+	        	 st.executeUpdate("delete from task WHERE id = '"+id+"'");
 
+			     response.sendRedirect("landing.jsp");
+	         }
+	         else
+	         {
+	        	 response.sendRedirect("error.jsp");
+	         }
 	         
-		     
-		     response.sendRedirect("landing.jsp");
+	         
   
 	      } 
 	      catch(SQLException se) 
