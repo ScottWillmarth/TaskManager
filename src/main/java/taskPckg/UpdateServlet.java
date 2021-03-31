@@ -34,7 +34,7 @@ public class UpdateServlet extends HttpServlet {
 	{
 		// JDBC driver name and database URL
 	      final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	      final String DB_URL="jdbc:mysql://localhost:3306/users";
+	      final String DB_URL="jdbc:mysql://localhost:3306/db_example";
 
 	      //  Database credentials
 	      final String USER = "root";
