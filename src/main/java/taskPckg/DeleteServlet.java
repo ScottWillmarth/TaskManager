@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class UpdateServlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet("/updateServlet")
-public class UpdateServlet extends HttpServlet {
+@WebServlet("/deleteServlet")
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateServlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +31,7 @@ public class UpdateServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// JDBC driver name and database URL
 	      final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -51,41 +52,12 @@ public class UpdateServlet extends HttpServlet {
 	         // Open a connection    
 	    	  
 	         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	         Statement st = conn.createStatement();
 
-	         String name = request.getParameter("name");
-	         String description = request.getParameter("desc");
-	         String severity = request.getParameter("severity");
-	         String sd = request.getParameter("sDate");
-	         String ed = request.getParameter("eDate");
 	         String id = request.getParameter("id");
 	         
+	         int i = st.executeUpdate("delete from task WHERE id = '"+id+"'");
 
-	         PreparedStatement update;
-	         if(!name.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET name='"+name+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
-	         if(!description.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET username='"+description+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
-	         if(!severity.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+severity+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
-	         if(!sd.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+sd+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }  
-	         if(!ed.isEmpty())
-	         {
-	        	 update = conn.prepareStatement("UPDATE userdetails SET password='"+ed+ "' WHERE id = '"+id+"'");
-	        	 update.executeUpdate();
-	         }
 	         
 		     
 		     response.sendRedirect("landing.jsp");

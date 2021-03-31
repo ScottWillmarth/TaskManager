@@ -10,12 +10,12 @@
 </head>
 <body>
     <form action="updateServlet" method="post">
+    Enter the ID of the Task: <input type="text" name="id" id="id" required>
     Change name: <input type="text" name="name" id="name"> <br><br>
     Change description: <input type="text" name="newDesc" id="desc"> <br><br>
     ChangeSeverity: <input type="text" name="severity" id="severity"> <br><br>
     Change Start Date: <input type="date" name="sDate" id="sDate"> <br><br>
     Change End Date: <input type="date" name="eDate" id="eDate"> <br><br>
-    <input type="hidden" name="id" id="id" value= <%= request.getAttribute("uid") %>>
     <input type="submit" value="Submit"/>
 </form>
 </body>
